@@ -10,6 +10,13 @@
       "name": "Attach by id",
       "skipFiles": ["<node_internals>/**"],
       "processId": "${command:PickProcess}"
+    },
+    {
+      "name": "Chrome",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceRoot}/client/src/App.js"
     }
   ]
 }
