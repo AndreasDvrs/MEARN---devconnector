@@ -6,7 +6,7 @@ const config = require("config");
 
 const Profile = require("../../models/Profile");
 const User = require("../../models/User");
-
+const Post = require("../../models/Post");
 // @route  GET api/profile/me
 // @desc   Get current users profile
 // @access Private
@@ -74,7 +74,7 @@ router.post(
     if (githubusername) profileFields.githubusername = githubusername;
 
     if (skills) {
-      profileFields.skills = skills.split(",").map(skill => skill.trim());
+      profileFields.skills = skills; //.split(",").map(skill => skill.trim());
     }
 
     // Build social object
@@ -155,6 +155,7 @@ router.get("/user/:user_id", async (req, res) => {
 router.delete("/", auth, async (req, res) => {
   try {
     // remove users posts
+    await Post.deleteMany({ user: req.user.id });
 
     //remove profile
     await Profile.findOneAndRemove({
@@ -177,18 +178,18 @@ router.delete("/", auth, async (req, res) => {
 router.put(
   "/experience",
   [
-    auth,
-    [
-      check("title", "Title is required")
-        .not()
-        .isEmpty(),
-      check("company", "Cimpany is required")
-        .not()
-        .isEmpty(),
-      check("from", "from Date is required")
-        .not()
-        .isEmpty()
-    ]
+    auth
+    // [
+    //   check("title", "Title is required")
+    //     .not()
+    //     .isEmpty(),
+    //   check("company", "Company is required")
+    //     .not()
+    //     .isEmpty(),
+    //   check("from", "from Date is required")
+    //     .not()
+    //     .isEmpty()
+    // ]
   ],
   async (req, res) => {
     const errors = validationResult(req);
