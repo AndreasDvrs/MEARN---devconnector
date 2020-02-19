@@ -52,7 +52,7 @@ router.get("/", auth, async (req, res) => {
     const posts = await Post.find().sort({ date: -1 });
     res.json(posts);
   } catch (err) {
-    console.log(error.message);
+    console.log(err.message);
     res.status(500).send("Server Error");
   }
 });
@@ -71,7 +71,7 @@ router.get("/:id", auth, async (req, res) => {
     if (err.kind === "ObjectId") {
       return res.status(404).json({ msg: "Post not found" });
     }
-    console.log(error.message);
+    console.log(err.message);
     res.status(500).send("Server Error");
   }
 });
@@ -95,7 +95,7 @@ router.delete("/:id", auth, async (req, res) => {
     if (err.kind === "ObjectId") {
       return res.status(404).json({ msg: "Post not found" });
     }
-    console.log(error.message);
+    console.log(err.message);
     res.status(500).send("Server Error");
   }
 });
@@ -175,7 +175,6 @@ router.post(
       const user = await User.findById(req.user.id).select("-password");
 
       const post = await Post.findById(req.params.id);
-      err;
 
       const newComment = {
         text: req.body.text,
@@ -189,8 +188,8 @@ router.post(
       await post.save();
 
       res.json(post.comments);
-    } catch (error) {
-      console.log(error.message);
+    } catch (err) {
+      console.log(err.message);
       res.status(500).send("Server Error");
     }
   }
