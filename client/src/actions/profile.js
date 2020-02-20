@@ -44,7 +44,7 @@ export const getProfiles = () => async dispatch => {
   }
 };
 
-// Get all profiles
+// Get profile by id
 export const getProfileById = userId => async dispatch => {
   try {
     const res = await axios.get(`/api/profile/user/${userId}`);
@@ -60,10 +60,12 @@ export const getProfileById = userId => async dispatch => {
   }
 };
 
-// Get all profiles
+// Get github repos
 export const getGithubRepos = username => async dispatch => {
   try {
-    const res = await axios.get(`/api/profile/github/${username}`);
+    // const res = await axios.get(`/api/profile/github/${username}`);
+    const res = {};
+    res.data = null;
     dispatch({
       type: GET_REPOS,
       payload: res.data
@@ -121,13 +123,14 @@ export const addExperience = (formData, history) => async dispatch => {
       }
     };
     const res = await axios.put("/api/profile/experience", formData, config);
-    console.log("AFTER AXIOS");
     dispatch({
       type: UPDATE_PROFILE,
       payload: res.data
     });
 
     dispatch(setAlert("Experience Added", "success"));
+
+    history.push("/dashboard");
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
@@ -156,6 +159,8 @@ export const addEducation = (formData, history) => async dispatch => {
     });
 
     dispatch(setAlert("Education Added", "success"));
+
+    history.push("/dashboard");
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {

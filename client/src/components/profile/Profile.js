@@ -59,21 +59,17 @@ const Profile = ({
               <h2 className="text-primary">Education</h2>
               {profile.education.length > 0 ? (
                 <Fragment>
-                  {profile.education.map(education => (
-                    <ProfileEducation
-                      key={education._id}
-                      experience={education}
-                    />
+                  {profile.education.map(edu => (
+                    <ProfileEducation key={edu._id} education={edu} />
                   ))}
                 </Fragment>
               ) : (
                 <h4>No education credentials</h4>
               )}
             </div>
-
-            {profile.githubusername && (
+            {/* {profile.githubusername && (
               <ProfileGithub username={profile.githubusername} />
-            )}
+            )} */}
           </div>
         </Fragment>
       )}

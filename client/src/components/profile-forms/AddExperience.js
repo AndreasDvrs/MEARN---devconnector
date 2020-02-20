@@ -20,7 +20,7 @@ const AddExperience = ({ addExperience, history }) => {
   const { company, title, location, from, to, current, description } = formData;
 
   const onChange = e =>
-    setFormData({ ...formData, [e.target.name]: [e.target.value] });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
   return (
     <Fragment>
@@ -34,7 +34,6 @@ const AddExperience = ({ addExperience, history }) => {
         className="form"
         onSubmit={e => {
           e.preventDefault();
-          console.log(formData);
           addExperience(formData, history);
         }}
       >
